@@ -1,0 +1,197 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap");
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/*
+  LazyLens AI design tokens.
+  Light values live on :root, dark values on .dark. `@theme inline` maps them to
+  Tailwind utilities (bg-background, text-foreground, border-border, ...) so the
+  theme toggle is a single class swap.
+*/
+
+:root {
+  --background: #f7f6f4;
+  --surface: #ffffff;
+  --surface-2: #f1efeb;
+  --foreground: #1b1a18;
+  --muted: #efece7;
+  --muted-foreground: #6b6560;
+  --border: #e3dfd9;
+  --primary: #8c1d2b;
+  --primary-hover: #74161f;
+  --on-primary: #ffffff;
+  --accent: #b06a2c;
+  --destructive: #b3261e;
+  --success: #2f7d55;
+  --warning: #a8621f;
+  --info: #3f5f8a;
+  --ring: #8c1d2b;
+  --chart-1: #8c1d2b;
+  --chart-2: #b06a2c;
+  --chart-3: #3f5f8a;
+  --chart-4: #2f7d55;
+  --chart-5: #7a5c86;
+  --chart-6: #8a7a56;
+  --grid: #e3dfd9;
+}
+
+.dark {
+  --background: #131215;
+  --surface: #1b1a1e;
+  --surface-2: #232228;
+  --foreground: #f4f2ef;
+  --muted: #232228;
+  --muted-foreground: #a49e97;
+  --border: #302e35;
+  --primary: #c33a4e;
+  --primary-hover: #d4495c;
+  --on-primary: #1a0509;
+  --accent: #d08a3f;
+  --destructive: #e0574c;
+  --success: #4fa87a;
+  --warning: #d08a3f;
+  --info: #7fa3d1;
+  --ring: #c33a4e;
+  --chart-1: #d24d60;
+  --chart-2: #d08a3f;
+  --chart-3: #7fa3d1;
+  --chart-4: #4fa87a;
+  --chart-5: #a98bb8;
+  --chart-6: #c2ae7d;
+  --grid: #302e35;
+}
+
+@theme inline {
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-on-primary: var(--on-primary);
+  --color-accent: var(--accent);
+  --color-destructive: var(--destructive);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-chart-6: var(--chart-6);
+  --color-grid: var(--grid);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--primary) 28%, transparent);
+  }
+}
+
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* thin, unobtrusive scrollbars for dense data tables */
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.scroll-thin::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 9999px;
+}
+.scroll-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@keyframes shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.skeleton {
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-2);
+}
+.skeleton::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in oklab, var(--foreground) 6%, transparent),
+    transparent
+  );
+  animation: shimmer 1.4s infinite;
+}
+
+@keyframes riseIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.rise-in {
+  animation: riseIn 320ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
